@@ -666,6 +666,7 @@
                 <option>5 יחידות לימוד</option>
                 <option>מסלול בסיסי</option>
                 <option>מסלול מורחב</option>
+                <option>חטיבת ביניים במגזר הערבי</option>
               </select>
             </div>
           </div>
@@ -741,6 +742,12 @@
             </label>
             <label class="check-item">
               <input type="checkbox" id="q-fill"> מילוי חסר
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="q-sequence"> רצף אירועים
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="q-diagram"> תרשים להפקת נתונים
             </label>
           </div>
         </div>
@@ -818,6 +825,7 @@
               <select id="improve-level" style="flex:1">
                 <option value="">רמה...</option>
                 <option>3 יחידות</option><option>4 יחידות</option><option>5 יחידות</option>
+                <option>חטיבת ביניים במגזר הערבי</option>
               </select>
             </div>
           </div>
@@ -949,6 +957,8 @@
     if (gc('q-essay')) types.push('שאלות חיבוריות');
     if (gc('q-match')) types.push('התאמה');
     if (gc('q-fill')) types.push('מילוי חסר');
+    if (gc('q-sequence')) types.push('רצף אירועים');
+    if (gc('q-diagram')) types.push('תרשים להפקת נתונים');
     return types;
   }
 
