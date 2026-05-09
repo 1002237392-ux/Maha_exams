@@ -666,7 +666,6 @@
                 <option>5 יחידות לימוד</option>
                 <option>מסלול בסיסי</option>
                 <option>מסלול מורחב</option>
-                <option>חטיבת ביניים במגזר הערבי</option>
               </select>
             </div>
           </div>
@@ -735,9 +734,6 @@
               <input type="checkbox" id="q-short" checked> שאלות פתוחות קצרות
             </label>
             <label class="check-item">
-              <input type="checkbox" id="q-essay"> שאלות חיבוריות / מפורטות
-            </label>
-            <label class="check-item">
               <input type="checkbox" id="q-match"> התאמה
             </label>
             <label class="check-item">
@@ -747,7 +743,13 @@
               <input type="checkbox" id="q-sequence"> רצף אירועים
             </label>
             <label class="check-item">
-              <input type="checkbox" id="q-diagram"> תרשים להפקת נתונים
+              <input type="checkbox" id="q-chart"> תרשים להפקת נתונים
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="q-connectors"> מילות קישור
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="q-prepositions"> מילות יחס
             </label>
           </div>
         </div>
@@ -825,7 +827,6 @@
               <select id="improve-level" style="flex:1">
                 <option value="">רמה...</option>
                 <option>3 יחידות</option><option>4 יחידות</option><option>5 יחידות</option>
-                <option>חטיבת ביניים במגזר הערבי</option>
               </select>
             </div>
           </div>
@@ -954,11 +955,12 @@
     if (gc('q-multi')) types.push('בחירה מרובה');
     if (gc('q-truefalse')) types.push('נכון / לא נכון');
     if (gc('q-short')) types.push('שאלות פתוחות קצרות');
-    if (gc('q-essay')) types.push('שאלות חיבוריות');
     if (gc('q-match')) types.push('התאמה');
     if (gc('q-fill')) types.push('מילוי חסר');
     if (gc('q-sequence')) types.push('רצף אירועים');
-    if (gc('q-diagram')) types.push('תרשים להפקת נתונים');
+    if (gc('q-chart')) types.push('תרשים להפקת נתונים');
+    if (gc('q-connectors')) types.push('מילות קישור');
+    if (gc('q-prepositions')) types.push('מילות יחס');
     return types;
   }
 
