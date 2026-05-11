@@ -661,43 +661,31 @@
               <label>רמה / מסלול</label>
               <select id="level">
                 <option value="">בחרי רמה...</option>
-                <option>3 יחידות לימוד</option>
-                <option>4 יחידות לימוד</option>
-                <option>5 יחידות לימוד</option>
-                <option>מסלול בסיסי</option>
-                <option>מסלול מורחב</option>
+                <optgroup label="יחידות לימוד (בגרות)">
+                  <option>3 יחידות לימוד</option>
+                  <option>4 יחידות לימוד</option>
+                  <option>5 יחידות לימוד</option>
+                </optgroup>
+                <optgroup label="מסלולים">
+                  <option>מסלול בסיסי</option>
+                  <option>מסלול מורחב</option>
+                </optgroup>
+                <optgroup label="חטיבת ביניים – מגזר ערבי">
+                  <option>חטב – רמה א'</option>
+                  <option>חטב – רמה ב'</option>
+                  <option>חטב – רמה מתקדמת</option>
+                  <option>חטב – כיתה ז' מגזר ערבי</option>
+                  <option>חטב – כיתה ח' מגזר ערבי</option>
+                  <option>חטב – כיתה ט' מגזר ערבי</option>
+                </optgroup>
               </select>
             </div>
           </div>
-          <div class="form-group" style="margin-bottom:0">
-            <label>נושא המבחן</label>
-            <select id="topic">
-              <option value="">בחרי נושא...</option>
-              <optgroup label="הבנת הנקרא">
-                <option>הבנת הנקרא – טקסט ספרותי</option>
-                <option>הבנת הנקרא – טקסט עיוני</option>
-                <option>הבנת הנקרא – שירה</option>
-                <option>השוואת טקסטים</option>
-              </optgroup>
-              <optgroup label="לשון">
-                <option>תחביר ודקדוק</option>
-                <option>פועל – בניינים וזמנים</option>
-                <option>שמות עצם ותארים</option>
-                <option>מבנה הפסוק</option>
-                <option>כינויי גוף</option>
-                <option>מוצא המילה ואטימולוגיה</option>
-              </optgroup>
-              <optgroup label="ביטוי כתוב">
-                <option>כתיבה יצירתית – סיפור</option>
-                <option>כתיבה עיונית – מאמר</option>
-                <option>כתיבת תגובה</option>
-                <option>כתיבה אישית</option>
-              </optgroup>
-              <optgroup label="שמיעה">
-                <option>הבנת הנשמע</option>
-              </optgroup>
-              <option value="אחר">אחר (פרטי בהערות)</option>
-            </select>
+
+          <!-- EXAM TITLE -->
+          <div class="form-group" style="margin-top:16px; margin-bottom:0">
+            <label>כותרת המבחן <span style="font-weight:400; color:var(--text-muted)">(אופציונלי – אם לא תמלאי, הבינה תבחר)</span></label>
+            <input type="text" id="exam-title" placeholder="לדוגמה: מבחן בעברית – הבנת הנקרא וביטוי כתוב, סמסטר א'" style="width:100%; margin-top:0;" />
           </div>
         </div>
       </div>
@@ -706,8 +694,10 @@
       <div class="panel">
         <div class="panel-header">📊 מבנה המבחן וחלוקת ניקוד</div>
         <div class="panel-body">
+
+          <!-- SECTIONS -->
           <div class="sections-header">
-            <label style="font-weight:600; font-size:14px; color:var(--text)">הוסיפי חלקי מבחן עם הנושא, מספר השאלות והניקוד</label>
+            <label style="font-weight:600; font-size:14px; color:var(--text)">חלקי המבחן – נושא, שאלות וניקוד</label>
             <button class="btn-add" onclick="addSection()">+ הוספת חלק</button>
           </div>
           <div id="sections-container"></div>
@@ -716,6 +706,28 @@
             <span>·</span>
             <span>סה"כ ניקוד: <span id="total-pts">0</span></span>
           </div>
+
+          <!-- READING TEXTS -->
+          <div style="margin-top:24px; border-top:1px solid var(--border); padding-top:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <label style="font-weight:700; font-size:14px; color:var(--blue);">📄 קטעי הבנת הנקרא</label>
+              <button class="btn-add" onclick="addReadText()">+ הוספת קטע קריאה</button>
+            </div>
+            <div id="read-texts-container"></div>
+          </div>
+
+          <!-- LISTENING TEXTS -->
+          <div style="margin-top:20px; border-top:1px solid var(--border); padding-top:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <label style="font-weight:700; font-size:14px; color:var(--blue);">🎧 קטעי הבנת הנשמע</label>
+              <button class="btn-add" onclick="addListenText()">+ הוספת קטע שמיעה</button>
+            </div>
+            <div style="background:var(--gold-pale); border:1px solid var(--gold-light); border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:12px; font-size:13px; color:#6b4c00;">
+              💡 <strong>טיפ:</strong> להמרת הטקסט לקובץ MP3 חינמי – השתמשי באתר <a href="https://ttsmaker.com" target="_blank" style="color:var(--gold); font-weight:700;">TTSMaker.com</a>. שימי לב: הגרסה החינמית מאפשרת עד <strong>3,000 תווים</strong> לכל המרה. מומלץ לפצל טקסטים ארוכים.
+            </div>
+            <div id="listen-texts-container"></div>
+          </div>
+
         </div>
       </div>
 
@@ -759,7 +771,7 @@
       <div class="panel">
         <div class="panel-header">📖 הנחיות לשוניות ומרכיבי מבחן</div>
         <div class="panel-body">
-          <div class="checkbox-grid" style="margin-bottom: 20px;">
+          <div class="checkbox-grid">
             <label class="check-item">
               <input type="checkbox" id="q-grammar"> שאלות דקדוק ולשון
             </label>
@@ -772,21 +784,6 @@
             <label class="check-item">
               <input type="checkbox" id="q-vocab"> שאלות אוצר מילים
             </label>
-          </div>
-
-          <!-- TEXT ATTACHMENTS -->
-          <div>
-            <div style="margin-bottom: 10px; font-weight:600; font-size:14px;">צירוף טקסטים / קטעים (אופציונלי)</div>
-            <button class="text-attach-btn" onclick="toggleTextBox('read-box')">+ טקסט לקריאה</button>
-            <button class="text-attach-btn" onclick="toggleTextBox('listen-box')">+ טקסט לשמיעה</button>
-            <div id="read-box" style="display:none;" class="text-box-wrapper">
-              <label>טקסט לקריאה – הדביקי את הקטע</label>
-              <textarea id="read-text" placeholder="הדביקי כאן את הקטע לקריאה..."></textarea>
-            </div>
-            <div id="listen-box" style="display:none;" class="text-box-wrapper">
-              <label>טקסט לשמיעה – הדביקי את הטקסט</label>
-              <textarea id="listen-text" placeholder="הדביקי כאן את טקסט ההאזנה..."></textarea>
-            </div>
           </div>
         </div>
       </div>
@@ -826,7 +823,21 @@
               </select>
               <select id="improve-level" style="flex:1">
                 <option value="">רמה...</option>
-                <option>3 יחידות</option><option>4 יחידות</option><option>5 יחידות</option>
+                <optgroup label="יחידות לימוד">
+                  <option>3 יחידות</option><option>4 יחידות</option><option>5 יחידות</option>
+                </optgroup>
+                <optgroup label="מסלולים">
+                  <option>מסלול בסיסי</option>
+                  <option>מסלול מורחב</option>
+                </optgroup>
+                <optgroup label="חטיבת ביניים – מגזר ערבי">
+                  <option>חטב – רמה א'</option>
+                  <option>חטב – רמה ב'</option>
+                  <option>חטב – רמה מתקדמת</option>
+                  <option>חטב – כיתה ז' מגזר ערבי</option>
+                  <option>חטב – כיתה ח' מגזר ערבי</option>
+                  <option>חטב – כיתה ט' מגזר ערבי</option>
+                </optgroup>
               </select>
             </div>
           </div>
@@ -867,6 +878,8 @@
   let teacherName = '';
   let currentMode = 'build';
   let sections = [];
+  let readTexts = [];
+  let listenTexts = [];
 
   function startPlatform() {
     const val = document.getElementById('teacher-name-input').value.trim();
@@ -874,12 +887,8 @@
     document.getElementById('step-welcome').style.display = 'none';
     document.getElementById('step-main').style.display = 'block';
     document.getElementById('teacher-display').textContent = teacherName;
-
-    // Gender-aware greeting
-    const isFemaleName = true; // Hebrew context – default female
     document.getElementById('greeting-bar').innerHTML = 
       `ברוכה הבאה, <span>${teacherName}</span>! 👋 מה תרצי לעשות היום?`;
-
     addSection();
   }
 
@@ -896,6 +905,7 @@
     document.getElementById('result-box').style.display = 'none';
   }
 
+  // ── SECTIONS ──
   function addSection() {
     const id = Date.now();
     sections.push(id);
@@ -904,7 +914,33 @@
     row.className = 'section-row';
     row.id = 'sec-' + id;
     row.innerHTML = `
-      <input type="text" placeholder="נושא החלק (לדוגמה: הבנת הנקרא, לשון...)" class="sec-topic" />
+      <select class="sec-topic" style="padding:9px 12px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-family:'Heebo',sans-serif; font-size:13px; background:white; outline:none; width:100%; direction:rtl; cursor:pointer;">
+        <option value="">בחרי נושא החלק...</option>
+        <optgroup label="הבנת הנקרא">
+          <option>הבנת הנקרא – טקסט ספרותי</option>
+          <option>הבנת הנקרא – טקסט עיוני</option>
+          <option>הבנת הנקרא – שירה</option>
+          <option>השוואת טקסטים</option>
+        </optgroup>
+        <optgroup label="לשון">
+          <option>תחביר ודקדוק</option>
+          <option>פועל – בניינים וזמנים</option>
+          <option>שמות עצם ותארים</option>
+          <option>מבנה הפסוק</option>
+          <option>כינויי גוף</option>
+          <option>מוצא המילה ואטימולוגיה</option>
+        </optgroup>
+        <optgroup label="ביטוי כתוב">
+          <option>כתיבה יצירתית – סיפור</option>
+          <option>כתיבה עיונית – מאמר</option>
+          <option>כתיבת תגובה</option>
+          <option>כתיבה אישית</option>
+        </optgroup>
+        <optgroup label="שמיעה">
+          <option>הבנת הנשמע</option>
+        </optgroup>
+        <option value="אחר">אחר</option>
+      </select>
       <input type="number" placeholder="שאלות" min="1" class="sec-q" oninput="updateTotals()" />
       <input type="number" placeholder="ניקוד" min="1" class="sec-pts" oninput="updateTotals()" />
       <button class="btn-remove" onclick="removeSection(${id})">×</button>
@@ -928,13 +964,92 @@
     document.getElementById('total-pts').textContent = totalPts;
   }
 
-  function toggleTextBox(id) {
-    const el = document.getElementById(id);
-    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  // ── READING TEXTS ──
+  function addReadText() {
+    const id = 'rt-' + Date.now();
+    readTexts.push(id);
+    const c = document.getElementById('read-texts-container');
+    const box = document.createElement('div');
+    box.id = id;
+    box.style.cssText = 'background:var(--bg); border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:16px; margin-bottom:14px;';
+    box.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <span style="font-weight:700; font-size:13px; color:var(--blue);">📄 קטע קריאה</span>
+        <button class="btn-remove" onclick="removeText('${id}', 'read')" style="width:auto; padding:4px 10px; font-size:13px;">✕ הסירי</button>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-bottom:10px;">
+        <div>
+          <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;">נושא הקטע</label>
+          <input type="text" class="rt-topic" placeholder="לדוגמה: סיפור משפחתי" style="width:100%; padding:8px 10px; font-size:13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); direction:rtl;" />
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;">מספר שורות</label>
+          <input type="number" class="rt-lines" placeholder="30" min="1" style="width:100%; padding:8px 10px; font-size:13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); direction:rtl;" />
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;">מספר שאלות</label>
+          <input type="number" class="rt-q" placeholder="8" min="1" style="width:100%; padding:8px 10px; font-size:13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); direction:rtl;" />
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;">ניקוד</label>
+          <input type="number" class="rt-pts" placeholder="30" min="1" style="width:100%; padding:8px 10px; font-size:13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); direction:rtl;" />
+        </div>
+      </div>
+      <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;">טקסט הקטע (אופציונלי – הדביקי אם ברשותך)</label>
+      <textarea class="rt-text" placeholder="הדביקי כאן את הקטע לקריאה..." style="width:100%; min-height:70px; padding:9px 12px; font-size:13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); direction:rtl; resize:vertical;"></textarea>
+    `;
+    c.appendChild(box);
   }
 
-  function gv(id) { return document.getElementById(id).value; }
-  function gc(id) { return document.getElementById(id).checked; }
+  // ── LISTENING TEXTS ──
+  function addListenText() {
+    const id = 'lt-' + Date.now();
+    listenTexts.push(id);
+    const c = document.getElementById('listen-texts-container');
+    const box = document.createElement('div');
+    box.id = id;
+    box.style.cssText = 'background:var(--gold-pale); border:1.5px solid var(--gold-light); border-radius:var(--radius-sm); padding:16px; margin-bottom:14px;';
+    box.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <span style="font-weight:700; font-size:13px; color:var(--gold);">🎧 קטע שמיעה</span>
+        <button class="btn-remove" onclick="removeText('${id}', 'listen')" style="width:auto; padding:4px 10px; font-size:13px;">✕ הסירי</button>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-bottom:10px;">
+        <div>
+          <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;">נושא הקטע</label>
+          <input type="text" class="lt-topic" placeholder="לדוגמה: שיחה בבית הספר" style="width:100%; padding:8px 10px; font-size:13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); direction:rtl;" />
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;">מספר שורות</label>
+          <input type="number" class="lt-lines" placeholder="20" min="1" style="width:100%; padding:8px 10px; font-size:13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); direction:rtl;" />
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;">מספר שאלות</label>
+          <input type="number" class="lt-q" placeholder="6" min="1" style="width:100%; padding:8px 10px; font-size:13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); direction:rtl;" />
+        </div>
+        <div>
+          <label style="font-size:12px; font-weight:600; color:var(--text-muted); display:block; margin-bottom:4px;">ניקוד</label>
+          <input type="number" class="lt-pts" placeholder="20" min="1" style="width:100%; padding:8px 10px; font-size:13px; border:1.5px solid var(--border); border-radius:var(--radius-sm); direction:rtl;" />
+        </div>
+      </div>
+    `;
+    c.appendChild(box);
+  }
+
+  function removeText(id, type) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+    if (type === 'read') readTexts = readTexts.filter(x => x !== id);
+    else listenTexts = listenTexts.filter(x => x !== id);
+  }
+
+  function toggleTextBox(id) {
+    const el = document.getElementById(id);
+    if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function gv(id) { return document.getElementById(id) ? document.getElementById(id).value : ''; }
+  function gc(id) { return document.getElementById(id) ? document.getElementById(id).checked : false; }
 
   function getSections() {
     const rows = document.querySelectorAll('.section-row');
@@ -948,6 +1063,33 @@
       }
     });
     return parts;
+  }
+
+  function getReadTextsData() {
+    const boxes = document.querySelectorAll('#read-texts-container > div');
+    let arr = [];
+    boxes.forEach((box, i) => {
+      const topic = box.querySelector('.rt-topic').value.trim();
+      const lines = box.querySelector('.rt-lines').value;
+      const q = box.querySelector('.rt-q').value;
+      const pts = box.querySelector('.rt-pts').value;
+      const text = box.querySelector('.rt-text').value.trim();
+      arr.push({ num: i + 1, topic, lines, q, pts, text });
+    });
+    return arr;
+  }
+
+  function getListenTextsData() {
+    const boxes = document.querySelectorAll('#listen-texts-container > div');
+    let arr = [];
+    boxes.forEach((box, i) => {
+      const topic = box.querySelector('.lt-topic').value.trim();
+      const lines = box.querySelector('.lt-lines').value;
+      const q = box.querySelector('.lt-q').value;
+      const pts = box.querySelector('.lt-pts').value;
+      arr.push({ num: i + 1, topic, lines, q, pts });
+    });
+    return arr;
   }
 
   function getQuestionTypes() {
@@ -967,10 +1109,12 @@
   function generateBuild() {
     const grade = gv('grade');
     const level = gv('level');
-    const topic = gv('topic');
+    const examTitle = gv('exam-title').trim();
     const notes = gv('notes');
-    const sections = getSections();
+    const sectionsData = getSections();
     const qTypes = getQuestionTypes();
+    const readData = getReadTextsData();
+    const listenData = getListenTextsData();
 
     const extras = [];
     if (gc('q-grammar')) extras.push('שאלות דקדוק ולשון');
@@ -978,21 +1122,20 @@
     if (gc('q-listening')) extras.push('הבנת הנשמע');
     if (gc('q-vocab')) extras.push('שאלות אוצר מילים');
 
-    const readText = gv('read-text').trim();
-    const listenText = gv('listen-text').trim();
-
     let prompt = `אתה מומחה בבניית מבחנים בשפה העברית.
 
-⚡ משימה: בנה מבחן מובנה ומלא, מנוסח בעברית תקנית, מותאם לפרמטרים הבאים:
+⚡ משימה: בנה מבחן מובנה ומלא לפי הפרמטרים הבאים, ולאחר מכן הפק שני קבצי Word (.docx) נפרדים כמפורט בסוף.
 
 👩‍🏫 המורה: ${teacherName}
 🎓 כיתה: ${grade || 'לא צוין'}
-📚 רמה: ${level || 'לא צוין'}
-📖 נושא: ${topic || 'לא צוין'}`;
+📚 רמה: ${level || 'לא צוין'}`;
 
-    if (sections.length > 0) {
-      prompt += `\n\n📋 מבנה המבחן:
-${sections.join('\n')}`;
+    if (examTitle) {
+      prompt += `\n📌 כותרת המבחן: ${examTitle}`;
+    }
+
+    if (sectionsData.length > 0) {
+      prompt += `\n\n📋 מבנה המבחן:\n${sectionsData.join('\n')}`;
     }
 
     if (qTypes.length > 0) {
@@ -1003,24 +1146,59 @@ ${sections.join('\n')}`;
       prompt += `\n\n🔠 מרכיבים נוספים: ${extras.join(', ')}`;
     }
 
-    if (readText) {
-      prompt += `\n\n📄 טקסט לקריאה מצורף:\n---\n${readText}\n---`;
+    // Reading texts
+    if (readData.length > 0) {
+      prompt += `\n\n📄 קטעי הבנת הנקרא (${readData.length} קטע/ים):`;
+      readData.forEach(r => {
+        prompt += `\n\n  קטע קריאה ${r.num}:`;
+        if (r.topic) prompt += `\n  • נושא: ${r.topic}`;
+        if (r.lines) prompt += `\n  • אורך: כ-${r.lines} שורות`;
+        if (r.q) prompt += `\n  • מספר שאלות: ${r.q}`;
+        if (r.pts) prompt += `\n  • ניקוד: ${r.pts} נקודות`;
+        if (r.text) prompt += `\n  • הטקסט המצורף:\n---\n${r.text}\n---`;
+        else prompt += `\n  • ⚠️ טקסט לא צורף – צרי קטע מתאים בהתאם לנושא ולרמה`;
+      });
     }
-    if (listenText) {
-      prompt += `\n\n🎧 טקסט לשמיעה מצורף:\n---\n${listenText}\n---`;
+
+    // Listening texts
+    if (listenData.length > 0) {
+      prompt += `\n\n🎧 קטעי הבנת הנשמע (${listenData.length} קטע/ים):`;
+      listenData.forEach(l => {
+        prompt += `\n\n  קטע שמיעה ${l.num}:`;
+        if (l.topic) prompt += `\n  • נושא: ${l.topic}`;
+        if (l.lines) prompt += `\n  • אורך: כ-${l.lines} שורות`;
+        if (l.q) prompt += `\n  • מספר שאלות: ${l.q}`;
+        if (l.pts) prompt += `\n  • ניקוד: ${l.pts} נקודות`;
+        prompt += `\n  • צרי קטע שמיעה מתאים לנושא ולרמה`;
+        prompt += `\n  • 📢 תזכורת למורה: להמרת הטקסט לקובץ MP3 חינמי – השתמשי באתר TTSMaker.com (עד 3,000 תווים להמרה)`;
+      });
     }
 
     if (notes) {
       prompt += `\n\n📝 הערות ובקשות מיוחדות: ${notes}`;
     }
 
-    prompt += `\n\n📌 הנחיות עיצוב:
-• כתוב את המבחן בעברית תקנית ומדויקת
-• הצג כותרת, שם המורה, כיתה ותאריך
+    prompt += `\n\n📌 הנחיות עיצוב חובה לשני הקבצים:
+• שפה: עברית תקנית ומדויקת
+• כיוון: מימין לשמאל (RTL)
+• גופן: David, גודל 14
+• כותרת ראשית: David Bold, גודל 16
+• כותרות חלקים: David Bold, גודל 14
+• הצג כותרת, שם המורה, כיתה ותאריך בראש הדף
 • חלק את המבחן לחלקים ברורים עם הוראות בתחילת כל חלק
-• ציין את הניקוד בצד כל שאלה
+• ציין ניקוד בצד כל שאלה
 • הוסף בסוף לוח ניקוד מסכם
-• וודא התאמה לרמת הכיתה`;
+
+📁 הפק שני קבצי Word נפרדים:
+
+קובץ 1 – מבחן התלמיד (exam_student.docx):
+• המבחן המלא לחלוקה לתלמידים
+• ללא טקסטי השמיעה וללא תשובות
+
+קובץ 2 – מרשד המורה (exam_teacher_guide.docx):
+• עמוד 1: המבחן המלא עם כל התשובות מסומנות
+• עמוד 2: טקסטי השמיעה המלאים (לא מופיעים בדף התלמיד)
+• עמוד 3: מפתח תשובות מלא עם הסברים והנחיות להערכה`;
 
     showResult(prompt);
   }
@@ -1033,7 +1211,7 @@ ${sections.join('\n')}`;
 
     let prompt = `אתה מומחה בהערכה ומדידה בשפה העברית.
 
-⚡ משימה: שפר, הרחב והתאם את המבחן המצורף לקריטריונים הנדרשים.
+⚡ משימה: שפר, הרחב והתאם את המבחן המצורף לקריטריונים הנדרשים, ולאחר מכן הפק שני קבצי Word נפרדים.
 
 📝 פרטי המבחן:
 • מקצוע: ${subject}
@@ -1052,6 +1230,22 @@ ${sections.join('\n')}`;
 • הוספת שאלות חשיבה ביקורתית לפי הצורך
 • וודא שהמבחן מכסה את מטרות הלמידה
 
+📌 הנחיות עיצוב חובה:
+• שפה: עברית תקנית ומדויקת
+• כיוון: מימין לשמאל (RTL)
+• גופן: David, גודל 14
+• כותרת ראשית: David Bold, גודל 16
+
+📁 הפק שני קבצי Word נפרדים:
+
+קובץ 1 – מבחן התלמיד (exam_student.docx):
+• המבחן המשופר לחלוקה לתלמידים – ללא תשובות וללא טקסטי שמיעה
+
+קובץ 2 – מרשד המורה (exam_teacher_guide.docx):
+• המבחן עם כל התשובות מסומנות
+• טקסטי השמיעה המלאים (אם קיימים)
+• מפתח תשובות עם הנחיות להערכה
+
 📎 צרף את המבחן הקיים לאחר הפקודה הזאת:`;
 
     showResult(prompt);
@@ -1066,11 +1260,40 @@ ${sections.join('\n')}`;
 
   function copyPrompt() {
     const text = document.getElementById('result-prompt').textContent;
-    navigator.clipboard.writeText(text).then(() => {
-      const btn = document.querySelector('.copy-btn');
-      btn.textContent = '✅ הועתק!';
-      setTimeout(() => btn.textContent = '📋 העתיקי את הפקודה', 2000);
-    });
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        showCopySuccess();
+      }).catch(() => {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+
+  function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.top = '0';
+    textarea.style.left = '0';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      showCopySuccess();
+    } catch (err) {
+      alert('לא ניתן להעתיק אוטומטית. אנא סמני את הטקסט ידנית והעתיקי עם Ctrl+C');
+    }
+    document.body.removeChild(textarea);
+  }
+
+  function showCopySuccess() {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✅ הועתק!';
+    setTimeout(() => btn.textContent = '📋 העתיקי את הפקודה', 2000);
   }
 </script>
 </body>
